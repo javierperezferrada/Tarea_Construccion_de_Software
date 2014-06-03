@@ -25,10 +25,18 @@ class Main(QtGui.QWidget):
 	self.hl = QtGui.QHBoxLayout()
         self.tb_layout.setAlignment(QtCore.Qt.AlignRight)
 
-        #self.toolbox.setLayout(self.tb_layout)
-
 
 	self.qle = QtGui.QLineEdit(self)
+	self.lbl = QtGui.QLabel("Seleccione una marca", self)
+
+        self.combo = QtGui.QComboBox(self)
+        brands = [
+            {"id": "1", "name": "WRSI"},
+            {"id": "2", "name": "Venture"},
+            {"id": "3", "name": "Vango"}]
+        for element in brands:
+            self.combo.addItem(element["name"], element["id"])
+
         self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
         self.btn_edit = QtGui.QPushButton(u"&Editar")
         self.btn_delete = QtGui.QPushButton(u"&Eliminar")
@@ -37,6 +45,8 @@ class Main(QtGui.QWidget):
         self.tb_layout.addWidget(self.btn_edit)
         self.tb_layout.addWidget(self.btn_delete)
 	self.hl.addWidget(self.qle)
+	self.hl.addWidget(self.lbl)
+	self.hl.addWidget(self.combo)
         #Agregamos el widget toolbox a la pantalla principal
 	self.vl.addLayout(self.hl)
 	self.vl.addLayout(self.tb_layout)
