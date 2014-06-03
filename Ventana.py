@@ -18,24 +18,22 @@ class Main(QtGui.QWidget):
         self.show()
 
     def render_toolbox(self):
-
         self.toolbox = QtGui.QWidget(self)
         self.tb_layout = QtGui.QHBoxLayout()
-	self.vl = QtGui.QVBoxLayout()
-	self.hl = QtGui.QHBoxLayout()
+        self.vl = QtGui.QVBoxLayout()
+        self.hl = QtGui.QHBoxLayout()
         self.tb_layout.setAlignment(QtCore.Qt.AlignRight)
 
 
-	self.qle = QtGui.QLineEdit(self)
-	self.lbl = QtGui.QLabel("Seleccione una marca", self)
+        self.qle = QtGui.QLineEdit(self)
+        self.lbl = QtGui.QLabel("Seleccione una marca", self)
 
         self.combo = QtGui.QComboBox(self)
-        brands = [
-            {"id": "1", "name": "WRSI"},
-            {"id": "2", "name": "Venture"},
-            {"id": "3", "name": "Vango"}]
-        for element in brands:
-            self.combo.addItem(element["name"], element["id"])
+        brands = controller.obtener_marcas()
+        i=0
+        while i < len(brands):
+            self.combo.addItem(brands[i][1])
+            i = i + 1
 
         self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
         self.btn_edit = QtGui.QPushButton(u"&Editar")
@@ -44,13 +42,13 @@ class Main(QtGui.QWidget):
         self.tb_layout.addWidget(self.btn_add)
         self.tb_layout.addWidget(self.btn_edit)
         self.tb_layout.addWidget(self.btn_delete)
-	self.hl.addWidget(self.qle)
-	self.hl.addWidget(self.lbl)
-	self.hl.addWidget(self.combo)
+        self.hl.addWidget(self.qle)
+        self.hl.addWidget(self.lbl)
+        self.hl.addWidget(self.combo)
         #Agregamos el widget toolbox a la pantalla principal
-	self.vl.addLayout(self.hl)
-	self.vl.addLayout(self.tb_layout)
-	self.toolbox.setLayout(self.vl)
+        self.vl.addLayout(self.hl)
+        self.vl.addLayout(self.tb_layout)
+        self.toolbox.setLayout(self.vl)
         self.main_layout.addWidget(self.toolbox)
 
     def render_table(self):
@@ -84,12 +82,12 @@ class Main(QtGui.QWidget):
             index = self.model.index(r, 3, QtCore.QModelIndex())
             self.model.setData(index, row['correo'])
             r = r+1
-        self.table.setModel(self.model)
+            self.table.setModel(self.model)
 
-        self.table.setColumnWidth(0, 100)
-        self.table.setColumnWidth(1, 210)
-        self.table.setColumnWidth(2, 210)
-        self.table.setColumnWidth(3, 220)
+            self.table.setColumnWidth(0, 100)
+            self.table.setColumnWidth(1, 210)
+            self.table.setColumnWidth(2, 210)
+            self.table.setColumnWidth(3, 220)
 
     def set_signals(self):
         self.btn_delete.clicked.connect(self.delete)
@@ -113,6 +111,13 @@ class Main(QtGui.QWidget):
                 self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
                 self.ui.errorMessageDialog.showMessage("Error al eliminar el registro")
                 return False
+'''
+    def llenar_combo(self, combo):
+        #funcion que retorna un vector con las marcas que estan contenidas en la base de datos.
+        marcas = obtener_marcas()
+        self
+		
+       '''
 
 def run():
     app = QtGui.QApplication(sys.argv)

@@ -14,6 +14,15 @@ def obtener_alumnos():
     con.close()
     return alumnos
 
+def obtener_marcas():
+    con = conectar()
+    c = con.cursor()
+    query = "SELECT rut,nombres FROM alumnos"
+    resultado = c.execute(query)
+    marcas = resultado.fetchall()
+    con.close()
+    return marcas
+
 def delete(rut):
     exito = False
     con = conectar()
