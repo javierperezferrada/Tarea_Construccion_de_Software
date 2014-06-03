@@ -21,9 +21,14 @@ class Main(QtGui.QWidget):
 
         self.toolbox = QtGui.QWidget(self)
         self.tb_layout = QtGui.QHBoxLayout()
+	self.vl = QtGui.QVBoxLayout()
+	self.hl = QtGui.QHBoxLayout()
         self.tb_layout.setAlignment(QtCore.Qt.AlignRight)
-        self.toolbox.setLayout(self.tb_layout)
 
+        #self.toolbox.setLayout(self.tb_layout)
+
+
+	self.qle = QtGui.QLineEdit(self)
         self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
         self.btn_edit = QtGui.QPushButton(u"&Editar")
         self.btn_delete = QtGui.QPushButton(u"&Eliminar")
@@ -31,7 +36,11 @@ class Main(QtGui.QWidget):
         self.tb_layout.addWidget(self.btn_add)
         self.tb_layout.addWidget(self.btn_edit)
         self.tb_layout.addWidget(self.btn_delete)
+	self.hl.addWidget(self.qle)
         #Agregamos el widget toolbox a la pantalla principal
+	self.vl.addLayout(self.hl)
+	self.vl.addLayout(self.tb_layout)
+	self.toolbox.setLayout(self.vl)
         self.main_layout.addWidget(self.toolbox)
 
     def render_table(self):
