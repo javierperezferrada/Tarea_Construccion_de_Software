@@ -1,64 +1,79 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ventana.ui'
+# Form implementation generated from reading ui file 'ventana2.ui'
 #
-# Created: Wed May 28 22:51:30 2014
-#      by: pyside-uic 0.2.13 running on PySide 1.1.2
+# Created: Mon Jun  2 22:36:17 2014
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
+import sys
+
 from PySide import QtCore, QtGui
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(751, 436)
-        self.pushButton = QtGui.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(640, 20, 98, 27))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtGui.QPushButton(Dialog)
-        self.pushButton_2.setGeometry(QtCore.QRect(520, 20, 98, 27))
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(628, 311)
+        self.horizontalLayoutWidget = QtGui.QWidget(Form)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 8, 611, 31))
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.pushButton_19 = QtGui.QPushButton(self.horizontalLayoutWidget)
+        self.pushButton_19.setObjectName("pushButton_19")
+        self.horizontalLayout.addWidget(self.pushButton_19)
+        self.pushButton_2 = QtGui.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtGui.QPushButton(Dialog)
-        self.pushButton_3.setGeometry(QtCore.QRect(357, 20, 131, 27))
+        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.pushButton_3 = QtGui.QPushButton(self.horizontalLayoutWidget)
         self.pushButton_3.setObjectName("pushButton_3")
-        self.label = QtGui.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(410, 80, 151, 20))
+        self.horizontalLayout.addWidget(self.pushButton_3)
+        self.horizontalLayoutWidget_2 = QtGui.QWidget(Form)
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(9, 44, 611, 29))
+        self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
+        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.lineEdit = QtGui.QLineEdit(self.horizontalLayoutWidget_2)
+        self.lineEdit.setInputMask("")
+        self.lineEdit.setPlaceholderText("")
+        self.lineEdit.setObjectName("lineEdit")
+        self.horizontalLayout_2.addWidget(self.lineEdit)
+        self.label = QtGui.QLabel(self.horizontalLayoutWidget_2)
         self.label.setObjectName("label")
-        self.comboBox = QtGui.QComboBox(Dialog)
-        self.comboBox.setGeometry(QtCore.QRect(567, 70, 171, 27))
+        self.horizontalLayout_2.addWidget(self.label)
+        self.comboBox = QtGui.QComboBox(self.horizontalLayoutWidget_2)
+        self.comboBox.setMinimumSize(QtCore.QSize(150, 0))
         self.comboBox.setObjectName("comboBox")
-        self.textEdit = QtGui.QTextEdit(Dialog)
-        self.textEdit.setGeometry(QtCore.QRect(30, 70, 291, 31))
-        self.textEdit.setObjectName("textEdit")
-        self.tableView = QtGui.QTableView(Dialog)
-        self.tableView.setGeometry(QtCore.QRect(30, 130, 691, 261))
+        self.horizontalLayout_2.addWidget(self.comboBox)
+        self.tableView = QtGui.QTableView(Form)
+        self.tableView.setGeometry(QtCore.QRect(10, 80, 611, 221))
         self.tableView.setObjectName("tableView")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("Dialog", "Eliminar", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setText(QtGui.QApplication.translate("Dialog", "Editar", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setText(QtGui.QApplication.translate("Dialog", "Nuevo Producto", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Dialog", "Seleccione una Marca", None, QtGui.QApplication.UnicodeUTF8))
-        self.textEdit.setHtml(QtGui.QApplication.translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Que producto esta buscando</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-}
-cambio o 2
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Productos", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_19.setText(QtGui.QApplication.translate("Form", "Nuevo Producto", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_2.setText(QtGui.QApplication.translate("Form", "Editar", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_3.setText(QtGui.QApplication.translate("Form", "Eliminar", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit.setText(QtGui.QApplication.translate("Form", "Qué producto está buscando", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Form", "Seleccione una marca", None, QtGui.QApplication.UnicodeUTF8))
 
-
-
-cambio 3   
-
-
-
-Q
-
-cambio 4
-
+#ejecuto miWidget y lo muestro
+class ControlMainWindow(QtGui.QMainWindow):
+    def __init__(self, parent=None):
+        super(ControlMainWindow, self).__init__(parent)
+        self.ui =  Ui_Form()
+        self.ui.setupUi(self)
+   
+if __name__ == "__main__":
+    app = QtGui.QApplication(sys.argv)
+    mySW = ControlMainWindow()
+    mySW.show()
+    sys.exit(app.exec_())
