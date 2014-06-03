@@ -1,79 +1,105 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'ventana2.ui'
-#
-# Created: Mon Jun  2 22:36:17 2014
-#      by: pyside-uic 0.2.15 running on PySide 1.2.1
-#
-# WARNING! All changes made in this file will be lost!
-
 import sys
+from PySide import QtGui, QtCore
+import controller
 
-from PySide import QtCore, QtGui
+class Main(QtGui.QWidget):
+    def __init__(self):
+        super(Main, self).__init__()
+        self.resize(800, 500)
+        #http://srinikom.github.io/pyside-docs/PySide/QtGui/QVBoxLayout.html
+        self.main_layout = QtGui.QVBoxLayout(self)
+        #Dibujar grilla
+        self.render_toolbox()
+        self.render_table()
+        self.load_data()
+        self.set_signals()
+        self.show()
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(628, 311)
-        self.horizontalLayoutWidget = QtGui.QWidget(Form)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 8, 611, 31))
-        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
-        self.horizontalLayout = QtGui.QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.pushButton_19 = QtGui.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_19.setObjectName("pushButton_19")
-        self.horizontalLayout.addWidget(self.pushButton_19)
-        self.pushButton_2 = QtGui.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.horizontalLayout.addWidget(self.pushButton_2)
-        self.pushButton_3 = QtGui.QPushButton(self.horizontalLayoutWidget)
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.horizontalLayout.addWidget(self.pushButton_3)
-        self.horizontalLayoutWidget_2 = QtGui.QWidget(Form)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(9, 44, 611, 29))
-        self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
-        self.horizontalLayout_2 = QtGui.QHBoxLayout(self.horizontalLayoutWidget_2)
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.lineEdit = QtGui.QLineEdit(self.horizontalLayoutWidget_2)
-        self.lineEdit.setInputMask("")
-        self.lineEdit.setPlaceholderText("")
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout_2.addWidget(self.lineEdit)
-        self.label = QtGui.QLabel(self.horizontalLayoutWidget_2)
-        self.label.setObjectName("label")
-        self.horizontalLayout_2.addWidget(self.label)
-        self.comboBox = QtGui.QComboBox(self.horizontalLayoutWidget_2)
-        self.comboBox.setMinimumSize(QtCore.QSize(150, 0))
-        self.comboBox.setObjectName("comboBox")
-        self.horizontalLayout_2.addWidget(self.comboBox)
-        self.tableView = QtGui.QTableView(Form)
-        self.tableView.setGeometry(QtCore.QRect(10, 80, 611, 221))
-        self.tableView.setObjectName("tableView")
+    def render_toolbox(self):
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.toolbox = QtGui.QWidget(self)
+        self.tb_layout = QtGui.QHBoxLayout()
+        self.tb_layout.setAlignment(QtCore.Qt.AlignRight)
+        self.toolbox.setLayout(self.tb_layout)
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Productos", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_19.setText(QtGui.QApplication.translate("Form", "Nuevo Producto", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setText(QtGui.QApplication.translate("Form", "Editar", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_3.setText(QtGui.QApplication.translate("Form", "Eliminar", None, QtGui.QApplication.UnicodeUTF8))
-        self.lineEdit.setText(QtGui.QApplication.translate("Form", "Qué producto está buscando", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Form", "Seleccione una marca", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
+        self.btn_edit = QtGui.QPushButton(u"&Editar")
+        self.btn_delete = QtGui.QPushButton(u"&Eliminar")
+        #Agregamos los botones al layout
+        self.tb_layout.addWidget(self.btn_add)
+        self.tb_layout.addWidget(self.btn_edit)
+        self.tb_layout.addWidget(self.btn_delete)
+        #Agregamos el widget toolbox a la pantalla principal
+        self.main_layout.addWidget(self.toolbox)
 
-#ejecuto miWidget y lo muestro
-class ControlMainWindow(QtGui.QMainWindow):
-    def __init__(self, parent=None):
-        super(ControlMainWindow, self).__init__(parent)
-        self.ui =  Ui_Form()
-        self.ui.setupUi(self)
-   
-if __name__ == "__main__":
+    def render_table(self):
+        self.table = QtGui.QTableView(self)
+        self.table.setFixedWidth(790)
+        self.table.setFixedHeight(450)
+        self.table.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.table.setAlternatingRowColors(True)
+        self.table.setSortingEnabled(True)
+        #Se incorpora la tabla al layout
+        self.main_layout.addWidget(self.table)
+
+    def load_data(self):
+
+        alumnos = controller.obtener_alumnos()
+        #Creamos el modelo asociado a la tabla
+        self.model = QtGui.QStandardItemModel(len(alumnos), 4)
+        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"RUT"))
+        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombres"))
+        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Apellidos"))
+        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Correo"))
+
+        r = 0
+        for row in alumnos:
+            index = self.model.index(r, 0, QtCore.QModelIndex())
+            self.model.setData(index, row['rut'])
+            index = self.model.index(r, 1, QtCore.QModelIndex())
+            self.model.setData(index, row['nombres'])
+            index = self.model.index(r, 2, QtCore.QModelIndex())
+            self.model.setData(index, row['apellidos'])
+            index = self.model.index(r, 3, QtCore.QModelIndex())
+            self.model.setData(index, row['correo'])
+            r = r+1
+        self.table.setModel(self.model)
+
+        self.table.setColumnWidth(0, 100)
+        self.table.setColumnWidth(1, 210)
+        self.table.setColumnWidth(2, 210)
+        self.table.setColumnWidth(3, 220)
+
+    def set_signals(self):
+        self.btn_delete.clicked.connect(self.delete)
+
+    def delete(self):
+        model = self.table.model()
+        index = self.table.currentIndex()
+        if index.row() == -1: #No se ha seleccionado una fila
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.showMessage("Debe seleccionar una fila")
+            return False
+        else:
+            rut = model.index(index.row(), 0, QtCore.QModelIndex()).data()
+            if (controller.delete(rut)):
+                self.load_data()
+                msgBox = QtGui.QMessageBox()
+                msgBox.setText("EL registro fue eliminado.")
+                msgBox.exec_()
+                return True
+            else:
+                self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
+                self.ui.errorMessageDialog.showMessage("Error al eliminar el registro")
+                return False
+
+def run():
     app = QtGui.QApplication(sys.argv)
-    mySW = ControlMainWindow()
-    mySW.show()
+    main = Main()
     sys.exit(app.exec_())
+
+if __name__ == '__main__':
+    run()
+
