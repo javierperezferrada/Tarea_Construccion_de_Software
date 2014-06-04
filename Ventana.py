@@ -34,6 +34,7 @@ class Main(QtGui.QWidget):
         while i < len(brands):
             self.combo.addItem(brands[i][1])
             i = i + 1
+        self.combo.addItem("Todas las marcas")
 
         self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
         self.btn_edit = QtGui.QPushButton(u"&Editar")
@@ -93,6 +94,7 @@ class Main(QtGui.QWidget):
         #en esta funcion se definen todos los tratamientos de señales.
         self.btn_delete.clicked.connect(self.delete)
         self.qle.textChanged[str].connect(self.onChanged)
+
 
     def delete(self):
         model = self.table.model()
