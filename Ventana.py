@@ -63,24 +63,24 @@ class Main(QtGui.QWidget):
 
     def load_data(self):
 
-        alumnos = controller.obtener_alumnos()
+        productos = controller.obtener_productos()
         #Creamos el modelo asociado a la tabla
-        self.model = QtGui.QStandardItemModel(len(alumnos), 4)
-        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"RUT"))
-        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombres"))
-        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Apellidos"))
-        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Correo"))
+        self.model = QtGui.QStandardItemModel(len(productos), 4)
+        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
+        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Codigo"))
+        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Nombre"))
+        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Atributos"))
 
         r = 0
-        for row in alumnos:
+        for row in productos:
             index = self.model.index(r, 0, QtCore.QModelIndex())
-            self.model.setData(index, row['rut'])
+            self.model.setData(index, row['id'])
             index = self.model.index(r, 1, QtCore.QModelIndex())
-            self.model.setData(index, row['nombres'])
+            self.model.setData(index, row['codigo'])
             index = self.model.index(r, 2, QtCore.QModelIndex())
-            self.model.setData(index, row['apellidos'])
+            self.model.setData(index, row['nombre'])
             index = self.model.index(r, 3, QtCore.QModelIndex())
-            self.model.setData(index, row['correo'])
+            self.model.setData(index, row['atributos'])
             r = r+1
             self.table.setModel(self.model)
 
@@ -122,24 +122,24 @@ class Main(QtGui.QWidget):
                     return False
 
     def onChanged(self, text):
-        nombres = controller.obtener_nombres(text)
+        producto = controller.obtener_nombres(text)
         #Creamos el modelo asociado a la tabla
-        self.model = QtGui.QStandardItemModel(len(nombres), 4)
-        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"RUT"))
-        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombres"))
-        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Apellidos"))
-        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Correo"))
+        self.model = QtGui.QStandardItemModel(len(producto), 4)
+        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
+        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Codigo"))
+        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Nombre"))
+        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Atributos"))
 
         r = 0
-        for row in nombres:
+        for row in producto:
             index = self.model.index(r, 0, QtCore.QModelIndex())
-            self.model.setData(index, row['rut'])
+            self.model.setData(index, row['id'])
             index = self.model.index(r, 1, QtCore.QModelIndex())
-            self.model.setData(index, row['nombres'])
+            self.model.setData(index, row['codigo'])
             index = self.model.index(r, 2, QtCore.QModelIndex())
-            self.model.setData(index, row['apellidos'])
+            self.model.setData(index, row['nombre'])
             index = self.model.index(r, 3, QtCore.QModelIndex())
-            self.model.setData(index, row['correo'])
+            self.model.setData(index, row['atributos'])
             r = r+1
             self.table.setModel(self.model)
 

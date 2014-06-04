@@ -1,23 +1,23 @@
 import sqlite3
 
 def conectar():
-    con = sqlite3.connect('alumnos.db')
+    con = sqlite3.connect('db_tarea1.db')
     con.row_factory = sqlite3.Row
     return con
 
-def obtener_alumnos():
+def obtener_productos():
     con = conectar()
     c = con.cursor()
-    query = "SELECT * FROM alumnos"
+    query = "SELECT * FROM productos"
     resultado= c.execute(query)
-    alumnos = resultado.fetchall()
+    productos = resultado.fetchall()
     con.close()
-    return alumnos
+    return productos
 
 def obtener_marcas():
     con = conectar()
     c = con.cursor()
-    query = "SELECT rut,nombres FROM alumnos"
+    query = "SELECT id,nombre FROM marcas"
     resultado = c.execute(query)
     marcas = resultado.fetchall()
     con.close()
@@ -26,7 +26,7 @@ def obtener_marcas():
 def obtener_nombres(text):
     con = conectar()
     c = con.cursor()
-    query = "SELECT * FROM alumnos where nombres LIKE '%'||?||'%'"
+    query = "SELECT * FROM productos where nombre LIKE '%'||?||'%'"
     try:
         resultado = c.execute(query, [text])
         nombres = resultado.fetchall()
@@ -39,7 +39,7 @@ def delete(rut):
     exito = False
     con = conectar()
     c = con.cursor()
-    query = "DELETE FROM alumnos WHERE rut = ?"
+    query = "DELETE FROM productos WHERE id = ?"
     try:
         resultado = c.execute(query, [rut])
         con.commit()
@@ -52,6 +52,6 @@ def delete(rut):
 
 if __name__ == "__main__":
 
-    alumnos = obtener_alumnos()
+    '''alumnos = obtener_alumnos()
     for alumno in alumnos:
-        print alumno["nombres"]
+        print alumno["nombres"]'''
