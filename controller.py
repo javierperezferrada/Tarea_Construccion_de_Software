@@ -26,7 +26,7 @@ def obtener_marcas():
 def obtener_nombres(text):
     con = conectar()
     c = con.cursor()
-    query = "SELECT * FROM alumnos where nombres = ?"
+    query = "SELECT * FROM alumnos where nombres LIKE '%'||?||'%'"
     try:
         resultado = c.execute(query, [text])
         nombres = resultado.fetchall()
