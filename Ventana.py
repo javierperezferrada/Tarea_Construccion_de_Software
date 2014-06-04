@@ -30,7 +30,7 @@ class Main(QtGui.QWidget):
 
         self.combo = QtGui.QComboBox(self)
         brands = controller.obtener_marcas()
-        i=0
+        i = 0
         while i < len(brands):
             self.combo.addItem(brands[i][1])
             i = i + 1
@@ -91,6 +91,7 @@ class Main(QtGui.QWidget):
 
     def set_signals(self):
         self.btn_delete.clicked.connect(self.delete)
+        self.qle.textChanged[str].connect(self.onChanged)
 
     def delete(self):
         model = self.table.model()
@@ -111,6 +112,34 @@ class Main(QtGui.QWidget):
                 self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
                 self.ui.errorMessageDialog.showMessage("Error al eliminar el registro")
                 return False
+
+    def onChanged(self, text):
+        nombres = controller.obtener_nombres(text)
+        #Creamos el modelo asociado a la tabla
+        self.model = QtGui.QStandardItemModel(len(nombres), 4)
+        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"RUT"))
+        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombres"))
+        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Apellidos"))
+        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Correo"))
+
+        r = 0
+        for row in nombres:
+            index = self.model.index(r, 0, QtCore.QModelIndex())
+            self.model.setData(index, row['rut'])
+            index = self.model.index(r, 1, QtCore.QModelIndex())
+            self.model.setData(index, row['nombres'])
+            index = self.model.index(r, 2, QtCore.QModelIndex())
+            self.model.setData(index, row['apellidos'])
+            index = self.model.index(r, 3, QtCore.QModelIndex())
+            self.model.setData(index, row['correo'])
+            r = r+1
+            self.table.setModel(self.model)
+
+            self.table.setColumnWidth(0, 100)
+            self.table.setColumnWidth(1, 210)
+            self.table.setColumnWidth(2, 210)
+            self.table.setColumnWidth(3, 220)
+
 '''
     def llenar_combo(self, combo):
         #funcion que retorna un vector con las marcas que estan contenidas en la base de datos.

@@ -23,6 +23,18 @@ def obtener_marcas():
     con.close()
     return marcas
 
+def obtener_nombres(text):
+    con = conectar()
+    c = con.cursor()
+    query = "SELECT * FROM alumnos where nombres = ?"
+    try:
+        resultado = c.execute(query, [text])
+        nombres = resultado.fetchall()
+    except sqlite3.Error as e:
+        print "Error:", e.args[0]
+    con.close()
+    return nombres
+
 def delete(rut):
     exito = False
     con = conectar()
