@@ -90,6 +90,7 @@ class Main(QtGui.QWidget):
             self.table.setColumnWidth(3, 220)
 
     def set_signals(self):
+        #en esta funcion se definen todos los tratamientos de señales.
         self.btn_delete.clicked.connect(self.delete)
         self.qle.textChanged[str].connect(self.onChanged)
 
@@ -102,16 +103,23 @@ class Main(QtGui.QWidget):
             return False
         else:
             rut = model.index(index.row(), 0, QtCore.QModelIndex()).data()
-            if (controller.delete(rut)):
-                self.load_data()
-                msgBox = QtGui.QMessageBox()
-                msgBox.setText("EL registro fue eliminado.")
-                msgBox.exec_()
-                return True
-            else:
-                self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
-                self.ui.errorMessageDialog.showMessage("Error al eliminar el registro")
-                return False
+            msgBox2 = QtGui.QMessageBox()
+            msgBox2.setText(u"Se eliminará el registro")
+            msgBox2.setInformativeText(u"¿Está seguro de eliminar el registro?")
+            msgBox2.setStandardButtons(QtGui.QMessageBox.Cancel | QtGui.QMessageBox.Ok)
+            msgBox2.setDefaultButton(QtGui.QMessageBox.Ok)
+            ret = msgBox2.exec_()
+            if ret == QtGui.QMessageBox.Ok:
+                if (controller.delete(rut)):
+                    self.load_data()
+                    msgBox = QtGui.QMessageBox()
+                    msgBox.setText("EL registro fue eliminado.")
+                    msgBox.exec_()
+                    return True
+                else:
+                    self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
+                    self.ui.errorMessageDialog.showMessage("Error al eliminar el registro")
+                    return False
 
     def onChanged(self, text):
         nombres = controller.obtener_nombres(text)
