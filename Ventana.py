@@ -150,18 +150,35 @@ class Main(QtGui.QWidget):
             self.table.setColumnWidth(2, 210)
             self.table.setColumnWidth(3, 220)
 
-'''
-    def llenar_combo(self, combo):
+''' def llenar_combo(self, combo):
         #funcion que retorna un vector con las marcas que estan contenidas en la base de datos.
         marcas = obtener_marcas()
         self
 		
        '''
 
+
 def run():
     app = QtGui.QApplication(sys.argv)
     main = Main()
     sys.exit(app.exec_())
+
+
+class ventana_emgergente(QDialog):
+
+    def __init__(self):
+        QDialog.__init__(self, parent)
+
+        contenedor = QVBoxLayout()
+        self.setLayout(contenedor)
+        self.setWindowTitle("Agregar / Editar producto")
+
+        btnSalir = QPushButton("Salir",None)
+        contenedor.addWidget(btnSalir)
+        self.connect(btnSalir, SIGNAL("clicked()"), self.salir)
+
+    def salir(self):
+        exit()
 
 if __name__ == '__main__':
     run()
