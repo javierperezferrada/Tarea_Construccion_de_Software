@@ -1,4 +1,4 @@
- -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'login.ui'
 #
@@ -51,6 +51,7 @@ class Ui_Dialog(object):
         self.formLayout.setLayout(2, QtGui.QFormLayout.FieldRole, self.horizontalLayout)
 
         self.retranslateUi(Dialog)
+        QtCore.QObject.connect(self.pushButton_2, QtCore.SIGNAL("clicked()"), Dialog.close)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -65,7 +66,7 @@ class ControlMainWindow(QtGui.QMainWindow):
         super(ControlMainWindow, self).__init__(parent)
         self.ui =  Ui_Dialog()
         self.ui.setupUi(self)
-   
+
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     mySW = ControlMainWindow()
