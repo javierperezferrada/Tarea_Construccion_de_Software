@@ -73,6 +73,7 @@ class Main(QtGui.QWidget):
         #en esta funcion se definen todos los tratamientos de señales.
         self.btn_delete.clicked.connect(self.delete)
         self.qle.textChanged[str].connect(self.onChanged)
+        self.combo.activated[int].connect(self.onActivated)
 
 
     def delete(self):
@@ -106,40 +107,54 @@ class Main(QtGui.QWidget):
         producto = controller.obtener_nombres(text)
         self.llenar_tabla(producto)
 
+    def onActivated(self, index):
+        pk = self.combo.itemText(index)
+        if pk == "Todas las marcas":
+            self.load_data()
+        else:
+            productos = controller.obtener_productos_marca(pk)
+            self.llenar_tabla(productos)
+
 
     def llenar_tabla(self,datos):
+        if len(datos) == 0:
+            self.load_data()
+            print 0
         #Creamos el modelo asociado a la tabla
-        self.model = QtGui.QStandardItemModel(len(datos), 6)
-        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Nombre"))
-        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Atributos"))
-        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Descripcion"))
-        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Precio Neto"))
-        self.model.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Precio Bruto"))
-        self.model.setHorizontalHeaderItem(5, QtGui.QStandardItem(u"Marca"))
+        self.model = QtGui.QStandardItemModel(len(datos), 7)
+        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
+        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombre"))
+        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Atributos"))
+        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Descripción"))
+        self.model.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Precio Neto"))
+        self.model.setHorizontalHeaderItem(5, QtGui.QStandardItem(u"Precio Bruto"))
+        self.model.setHorizontalHeaderItem(6, QtGui.QStandardItem(u"Marca"))
 
         r = 0
         for row in datos:
             index = self.model.index(r, 0, QtCore.QModelIndex())
-            self.model.setData(index, row['nombre'])
+            self.model.setData(index, row['id'])
             index = self.model.index(r, 1, QtCore.QModelIndex())
-            self.model.setData(index, row['atributos'])
+            self.model.setData(index, row['nombre'])
             index = self.model.index(r, 2, QtCore.QModelIndex())
-            self.model.setData(index, row['descripcion'])
+            self.model.setData(index, row['atributos'])
             index = self.model.index(r, 3, QtCore.QModelIndex())
-            self.model.setData(index, row['precio_neto'])
+            self.model.setData(index, row['descripcion'])
             index = self.model.index(r, 4, QtCore.QModelIndex())
-            self.model.setData(index, row['precio_bruto'])
+            self.model.setData(index, row['precio_neto'])
             index = self.model.index(r, 5, QtCore.QModelIndex())
+            self.model.setData(index, row['precio_bruto'])
+            index = self.model.index(r, 6, QtCore.QModelIndex())
             self.model.setData(index, row['marca_id'])
             r = r+1
             self.table.setModel(self.model)
-
             self.table.setColumnWidth(0, 100)
-            self.table.setColumnWidth(1, 190)
-            self.table.setColumnWidth(2, 190)
+            self.table.setColumnWidth(1, 100)
+            self.table.setColumnWidth(2, 100)
             self.table.setColumnWidth(3, 100)
             self.table.setColumnWidth(4, 100)
             self.table.setColumnWidth(5, 100)
+            self.table.setColumnWidth(6, 100)
 
 
 

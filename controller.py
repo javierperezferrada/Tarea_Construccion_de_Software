@@ -23,6 +23,15 @@ def obtener_marcas():
     con.close()
     return marcas
 
+def obtener_productos_marca(marca):
+    con = conectar()
+    c = con.cursor()
+    query = "SELECT productos.* FROM productos,marcas where marcas.nombre==? and marcas.id=productos.marca_id"
+    resultado = c.execute(query,[marca])
+    productos = resultado.fetchall()
+    con.close()
+    return productos
+
 def obtener_nombres(text):
     con = conectar()
     c = con.cursor()
@@ -41,7 +50,7 @@ def delete(rut):
     c = con.cursor()
     query = "DELETE FROM productos WHERE id = ?"
     try:
-        resultado = c.execute(query, [rut])
+        c.execute(query, [rut])
         con.commit()
         exito = True
     except sqlite3.Error as e:
@@ -50,8 +59,3 @@ def delete(rut):
     con.close()
     return exito
 
-if __name__ == "__main__":
-
-    '''alumnos = obtener_alumnos()
-    for alumno in alumnos:
-        print alumno["nombres"]'''
