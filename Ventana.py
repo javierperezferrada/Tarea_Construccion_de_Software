@@ -14,6 +14,7 @@ class Main(QtGui.QWidget):
         self.render_toolbox()
         self.render_table()
         self.load_data()
+
         self.set_signals()
         self.show()
 
@@ -63,32 +64,10 @@ class Main(QtGui.QWidget):
         self.main_layout.addWidget(self.table)
 
     def load_data(self):
-
         productos = controller.obtener_productos()
-        #Creamos el modelo asociado a la tabla
-        self.model = QtGui.QStandardItemModel(len(productos), 4)
-        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
-        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Codigo"))
-        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Nombre"))
-        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Atributos"))
+        self.llenar_tabla(productos)
 
-        r = 0
-        for row in productos:
-            index = self.model.index(r, 0, QtCore.QModelIndex())
-            self.model.setData(index, row['id'])
-            index = self.model.index(r, 1, QtCore.QModelIndex())
-            self.model.setData(index, row['codigo'])
-            index = self.model.index(r, 2, QtCore.QModelIndex())
-            self.model.setData(index, row['nombre'])
-            index = self.model.index(r, 3, QtCore.QModelIndex())
-            self.model.setData(index, row['atributos'])
-            r = r+1
-            self.table.setModel(self.model)
 
-            self.table.setColumnWidth(0, 100)
-            self.table.setColumnWidth(1, 210)
-            self.table.setColumnWidth(2, 210)
-            self.table.setColumnWidth(3, 220)
 
     def set_signals(self):
         #en esta funcion se definen todos los tratamientos de señales.
@@ -125,37 +104,43 @@ class Main(QtGui.QWidget):
 
     def onChanged(self, text):
         producto = controller.obtener_nombres(text)
+        self.llenar_tabla(producto)
+
+
+    def llenar_tabla(self,datos):
         #Creamos el modelo asociado a la tabla
-        self.model = QtGui.QStandardItemModel(len(producto), 4)
-        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
-        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Codigo"))
-        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Nombre"))
-        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Atributos"))
+        self.model = QtGui.QStandardItemModel(len(datos), 6)
+        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Nombre"))
+        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Atributos"))
+        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Descripcion"))
+        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Precio Neto"))
+        self.model.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Precio Bruto"))
+        self.model.setHorizontalHeaderItem(5, QtGui.QStandardItem(u"Marca"))
 
         r = 0
-        for row in producto:
+        for row in datos:
             index = self.model.index(r, 0, QtCore.QModelIndex())
-            self.model.setData(index, row['id'])
-            index = self.model.index(r, 1, QtCore.QModelIndex())
-            self.model.setData(index, row['codigo'])
-            index = self.model.index(r, 2, QtCore.QModelIndex())
             self.model.setData(index, row['nombre'])
-            index = self.model.index(r, 3, QtCore.QModelIndex())
+            index = self.model.index(r, 1, QtCore.QModelIndex())
             self.model.setData(index, row['atributos'])
+            index = self.model.index(r, 2, QtCore.QModelIndex())
+            self.model.setData(index, row['descripcion'])
+            index = self.model.index(r, 3, QtCore.QModelIndex())
+            self.model.setData(index, row['precio_neto'])
+            index = self.model.index(r, 4, QtCore.QModelIndex())
+            self.model.setData(index, row['precio_bruto'])
+            index = self.model.index(r, 5, QtCore.QModelIndex())
+            self.model.setData(index, row['marca_id'])
             r = r+1
             self.table.setModel(self.model)
 
             self.table.setColumnWidth(0, 100)
-            self.table.setColumnWidth(1, 210)
-            self.table.setColumnWidth(2, 210)
-            self.table.setColumnWidth(3, 220)
+            self.table.setColumnWidth(1, 190)
+            self.table.setColumnWidth(2, 190)
+            self.table.setColumnWidth(3, 100)
+            self.table.setColumnWidth(4, 100)
+            self.table.setColumnWidth(5, 100)
 
-''' def llenar_combo(self, combo):
-        #funcion que retorna un vector con las marcas que estan contenidas en la base de datos.
-        marcas = obtener_marcas()
-        self
-		
-       '''
 
 
 def run():
@@ -164,22 +149,8 @@ def run():
     sys.exit(app.exec_())
 
 
-class ventana_emgergente(QDialog):
-
-    def __init__(self):
-        QDialog.__init__(self, parent)
-
-        contenedor = QVBoxLayout()
-        self.setLayout(contenedor)
-        self.setWindowTitle("Agregar / Editar producto")
-
-        btnSalir = QPushButton("Salir",None)
-        contenedor.addWidget(btnSalir)
-        self.connect(btnSalir, SIGNAL("clicked()"), self.salir)
-
-    def salir(self):
-        exit()
 
 if __name__ == '__main__':
     run()
+
 
