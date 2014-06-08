@@ -6,19 +6,18 @@ import controller
 
 class Main(QtGui.QWidget):
     def __init__(self):
+        # Constructor de la clase Main
         super(Main, self).__init__()
         self.resize(800, 500)
-        #http://srinikom.github.io/pyside-docs/PySide/QtGui/QVBoxLayout.html
         self.main_layout = QtGui.QVBoxLayout(self)
-        #Dibujar grilla
         self.render_toolbox()
         self.render_table()
         self.load_data()
-
         self.set_signals()
         self.show()
 
     def render_toolbox(self):
+        # metodo que crea la interfaz
         self.toolbox = QtGui.QWidget(self)
         self.tb_layout = QtGui.QHBoxLayout()
         self.vl = QtGui.QVBoxLayout()
@@ -28,7 +27,7 @@ class Main(QtGui.QWidget):
 
         self.qle = QtGui.QLineEdit(self)
         self.lbl = QtGui.QLabel("Seleccione una marca", self)
-
+        # se crea y se carga el combobox
         self.combo = QtGui.QComboBox(self)
         brands = controller.obtener_marcas()
         i = 0
@@ -36,12 +35,10 @@ class Main(QtGui.QWidget):
         while i < len(brands):
             self.combo.addItem(brands[i][1])
             i = i + 1
-
-
         self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
         self.btn_edit = QtGui.QPushButton(u"&Editar")
         self.btn_delete = QtGui.QPushButton(u"&Eliminar")
-        #Agregamos los botones al layout
+        #Agregamos los botones, combobox y label al layout
         self.tb_layout.addWidget(self.btn_add)
         self.tb_layout.addWidget(self.btn_edit)
         self.tb_layout.addWidget(self.btn_delete)
@@ -55,6 +52,7 @@ class Main(QtGui.QWidget):
         self.main_layout.addWidget(self.toolbox)
 
     def render_table(self):
+        #metodo que inicializa la qtableview
         self.table = QtGui.QTableView(self)
         self.table.setFixedWidth(790)
         self.table.setFixedHeight(450)
@@ -65,6 +63,7 @@ class Main(QtGui.QWidget):
         self.main_layout.addWidget(self.table)
 
     def load_data(self):
+        # Metodo que carga los productos en la tabla
         productos = controller.obtener_productos()
         self.llenar_tabla(productos)
 
@@ -78,6 +77,7 @@ class Main(QtGui.QWidget):
 
 
     def delete(self):
+        #Metodo que elimina el egistro seleccionado en la grilla de la bd
         model = self.table.model()
         index = self.table.currentIndex()
         if index.row() == -1: #No se ha seleccionado una fila
@@ -105,6 +105,7 @@ class Main(QtGui.QWidget):
                     return False
 
     def onChanged(self, text):
+        #Metodo invocado al cambiar el texto en el qlineedite
         producto = controller.obtener_nombres(text)
         self.llenar_tabla(producto)
 
@@ -118,6 +119,7 @@ class Main(QtGui.QWidget):
 
 
     def llenar_tabla(self,datos):
+        #Funcion que carga datos en la qtableview
         if len(datos) == 0:
             self.model = QtGui.QStandardItemModel(0, 7)
             self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
