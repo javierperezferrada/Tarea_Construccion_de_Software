@@ -9,6 +9,7 @@
 
 import sys
 import controller
+import Ventana
 
 from PySide import QtCore, QtGui
 
@@ -64,13 +65,15 @@ class Ui_Dialog(object):
         self.pushButton_2.setText(QtGui.QApplication.translate("Dialog", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
 
     def filtro(self):
-      # guardo mi usuario de lineEdit
+      # veo si tanto usuario como cotraseña correspoenden a la base de datos
       usuario = self.lineEdit.text()
       #guardo password
       password = self.lineEdit_2.text()
-      row=controller.logines(usuario,password)
-      
-      
+      result=controller.logines(usuario,password)
+      if result:
+        #si mi login es verdadero, ejecuta la ventana
+        Ventana.run()
+
 
 
 class ControlMainWindow(QtGui.QMainWindow):
