@@ -8,7 +8,9 @@ def conectar():
 def obtener_productos():
     con = conectar()
     c = con.cursor()
-    query = "SELECT * FROM productos"
+    query = '''select p.id,p.nombre, p.atributos,p.descripcion,p.precio_neto,
+             p.precio_bruto, m.nombre nombre_m from productos p, marcas m
+             where m.id == p.marca_id'''
     resultado= c.execute(query)
     productos = resultado.fetchall()
     con.close()
@@ -26,16 +28,19 @@ def obtener_marcas():
 def obtener_productos_marca(marca):
     con = conectar()
     c = con.cursor()
-    query = "SELECT productos.* FROM productos,marcas where marcas.nombre==? and marcas.id=productos.marca_id"
+    query = '''select p.id,p.nombre, p.atributos,p.descripcion,p.precio_neto,
+             p.precio_bruto, m.nombre nombre_m from productos p, marcas m
+             where m.id == p.marca_id and m.nombre == ?'''
     resultado = c.execute(query,[marca])
     productos = resultado.fetchall()
     con.close()
     return productos
 
+
 def obtener_nombres(text):
     con = conectar()
     c = con.cursor()
-    query = "SELECT * FROM productos where nombre LIKE '%'||?||'%'"
+    query = "select p.id,p.nombre, p.atributos,p.descripcion,p.precio_neto,p.precio_bruto, m.nombre nombre_m from productos p, marcas m where m.id == p.marca_id and p.nombre LIKE'%'||?||'%'"
     try:
         resultado = c.execute(query, [text])
         nombres = resultado.fetchall()

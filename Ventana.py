@@ -32,10 +32,11 @@ class Main(QtGui.QWidget):
         self.combo = QtGui.QComboBox(self)
         brands = controller.obtener_marcas()
         i = 0
+        self.combo.addItem("Todas las marcas")
         while i < len(brands):
             self.combo.addItem(brands[i][1])
             i = i + 1
-        self.combo.addItem("Todas las marcas")
+
 
         self.btn_add = QtGui.QPushButton(u"&Nuevo Producto")
         self.btn_edit = QtGui.QPushButton(u"&Editar")
@@ -118,17 +119,26 @@ class Main(QtGui.QWidget):
 
     def llenar_tabla(self,datos):
         if len(datos) == 0:
-            self.load_data()
-            print 0
-        #Creamos el modelo asociado a la tabla
-        self.model = QtGui.QStandardItemModel(len(datos), 7)
-        self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
-        self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombre"))
-        self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Atributos"))
-        self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Descripción"))
-        self.model.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Precio Neto"))
-        self.model.setHorizontalHeaderItem(5, QtGui.QStandardItem(u"Precio Bruto"))
-        self.model.setHorizontalHeaderItem(6, QtGui.QStandardItem(u"Marca"))
+            self.model = QtGui.QStandardItemModel(0, 7)
+            self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
+            self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombre"))
+            self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Atributos"))
+            self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Descripción"))
+            self.model.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Precio Neto"))
+            self.model.setHorizontalHeaderItem(5, QtGui.QStandardItem(u"Precio Bruto"))
+            self.model.setHorizontalHeaderItem(6, QtGui.QStandardItem(u"Marca"))
+            self.table.setModel(self.model)
+            print datos
+        else:
+            print datos
+            self.model = QtGui.QStandardItemModel(len(datos), 7)
+            self.model.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"ID"))
+            self.model.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Nombre"))
+            self.model.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Atributos"))
+            self.model.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Descripción"))
+            self.model.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Precio Neto"))
+            self.model.setHorizontalHeaderItem(5, QtGui.QStandardItem(u"Precio Bruto"))
+            self.model.setHorizontalHeaderItem(6, QtGui.QStandardItem(u"Marca"))
 
         r = 0
         for row in datos:
@@ -145,7 +155,7 @@ class Main(QtGui.QWidget):
             index = self.model.index(r, 5, QtCore.QModelIndex())
             self.model.setData(index, row['precio_bruto'])
             index = self.model.index(r, 6, QtCore.QModelIndex())
-            self.model.setData(index, row['marca_id'])
+            self.model.setData(index, row['nombre_m'])
             r = r+1
             self.table.setModel(self.model)
             self.table.setColumnWidth(0, 100)
