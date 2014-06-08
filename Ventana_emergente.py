@@ -136,44 +136,58 @@ class Example(QtGui.QWidget):
 
     def btn_guardar_clicked(self):
         #verifica si algunos de los campos ESTA VACIO
-        if (self.Codigo.text() == ""):
+        if (self.hay_espacios(self.Codigo.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo CODIGO se encuentra vacio')
 
-        elif (self.Nombre.text() == ""):
+        elif (self.hay_espacios(self.Nombre.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo NOMBRE se encuentra vacio')
 
-        elif (self.Atributos.text() == ""):
+        elif (self.hay_espacios(self.Atributos.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo ATRIBUTOS se encuentra vacio')
 
-        elif (self.Descripcion.text() == ""):
+        elif (self.hay_espacios(self.Descripcion.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo DESCRIPCION se encuentra vacio')
 
-        elif (self.Imagen.text() == ""):
+        elif (self.hay_espacios(self.Imagen.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo IMAGEN se encuentra vacio')
 
-        elif (self.Color.text() == ""):
+        elif (self.hay_espacios(self.Color.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo COLOR se encuentra vacio')
 
-        elif (self.Precio_neto.text() == ""):
+        elif (self.hay_espacios(self.Precio_neto.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo PRECIO NETO se encuentra vacio')
 
-        elif (self.Precio_bruto.text() == ""):
+        elif (self.hay_espacios(self.Precio_bruto.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo PRECIO BRUTO se encuentra vacio')
 
-        elif (self.Marca_id.text() == ""):
+        elif (self.hay_espacios(self.Marca_id.text())):
             QtGui.QMessageBox.information(self, 'Campo Vacio', 'El campo MARCA se encuentra vacio')
         ############################################################################
 
         else:
             resp = QtGui.QMessageBox.question(self, 'Editar/Agregar Producto',
                      '¿Desea Editar/Agregar producto?','Si','No', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
-        if resp == QtGui.QMessageBox.Yes:
-            print "bien" # >>>>>>>>>>>AQUI QUEDEEE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        else:
-            print "mal"
+            if resp == QtGui.QMessageBox.Yes:
+                print "bien" # >>>>>>>>>>>AQUI QUEDEEE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            else:
+                print "mal"
 
+    #Detecta si el texto ingresado es vacio o lleno de espacios
+    def hay_espacios(self, textoo):
+        s = textoo
+        t = s.split(" ")
+        largos = len(s)
+        largot =len(t)-1
+        if not s or (largot == largos): # Es vacio o lleno de espacios
+            return True
+        else:
+            return False #Todo bien
+    #############################################################
+
+    #Cierra Ventana_emergente.py
     def btn_cancelar_clicked(self):
         sys.exit(1)
+
 
     #Limpiar todos los campos
     def btn_limpiar_clicked(self):
@@ -201,6 +215,9 @@ class Example(QtGui.QWidget):
             text = int(text)
         except Exception:
             self.Precio_neto.setText(text[:-1])
+
+    #funcion para validar hay espacios
+
 
 
 
