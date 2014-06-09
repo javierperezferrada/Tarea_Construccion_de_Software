@@ -3,6 +3,8 @@
 import sqlite3
 import Ventana_emergente
 
+global edi
+
 def conectar():
     #Funcion para conectar con la base de datos db_tarea1.db
     con = sqlite3.connect('db_tarea1.db')
@@ -42,6 +44,7 @@ where m.id == p.marca_id and m.nombre == ?'''
     productos = resultado.fetchall()
     con.close()
     return productos
+
 
 
 def obtener_nombres(text):
@@ -134,6 +137,7 @@ def cedit(myid):
     query = '''SELECT codigo FROM productos WHERE id = ?'''
     codigo = c.execute(query, [myid])
     codigo = ''.join(codigo.fetchone())
+    Ventana_emergente.xcodigo = codigo
 
     query = '''SELECT nombre FROM productos WHERE id = ?'''
     nombre = c.execute(query, [myid])
@@ -157,14 +161,14 @@ def cedit(myid):
 
     query = '''SELECT precio_neto FROM productos WHERE id = ?'''
     precio_neto = c.execute(query, [myid])
-    precio_neto = ''.join(precio_neto.fetchone())
+    precio_neto = precio_neto.fetchone()[0]
 
     query = '''SELECT precio_bruto FROM productos WHERE id = ?'''
     precio_bruto = c.execute(query, [myid])
-    precio_bruto = ''.join(precio_bruto.fetchone())
+    precio_bruto = precio_bruto.fetchone()[0]
 
     query = '''SELECT marca_id FROM productos WHERE id = ?'''
     marca_id = c.execute(query, [myid])
-    marca_id = ''.join(marca_id.fetchone())
-
+    marca_id = marca_id.fetchone()[0]
     c.close()
+    return True

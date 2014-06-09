@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import controller
 from PySide import QtGui, QtCore
 
 class Example(QtGui.QWidget):
 
+    global xcodigo
+    xcodigo = ''
 
 
     def __init__(self):
         super(Example, self).__init__()
-
         self.initUI()
 
     def initUI(self ):
@@ -121,6 +123,7 @@ class Example(QtGui.QWidget):
         self.Precio_neto.textChanged[str].connect(self.onChangedNeto)
         self.Precio_bruto.textChanged[str].connect(self.onChangedBruto)
 
+        self.Codigo.setText(xcodigo)
         self.setGeometry(0, 0, 600, 700)
         self.setFixedSize(600, 600)
         self.setWindowTitle('Ventana Editar/Agregar Productos')
@@ -129,6 +132,7 @@ class Example(QtGui.QWidget):
     # Esto permite cargar imagenes, y deja la ruta en qline de imagen
     def btn_imagen_clicked(self):
         fname = QtGui.QFileDialog.getOpenFileName(self, 'Elige la imagen del producto', '/home','Imagenes (*.png  *.bmp *.psd *.xpm *.jpg)')
+        print fname
         fname = ''.join(fname)
         fname = fname.split("Imagenes (*.png  *.bmp *.psd *.xpm *.jpg)")
         if fname[0] != '':
@@ -165,8 +169,9 @@ class Example(QtGui.QWidget):
         ############################################################################
 
         else:
+            self.QtGui.QMessageBox.Yes.__name__= "Si"
             resp = QtGui.QMessageBox.question(self, 'Editar/Agregar Producto',
-                     '¿Desea Editar/Agregar producto?','Si','No', QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+                     '¿Desea Editar/Agregar producto?',QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
             if resp == QtGui.QMessageBox.Yes:
                 print "bien" # >>>>>>>>>>>AQUI QUEDEEE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             else:
